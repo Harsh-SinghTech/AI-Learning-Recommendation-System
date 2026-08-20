@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row align-items-center justify-content-center">
+
+        <!-- Left Section -->
+
+        <div class="col-lg-5">
+
+            <h1 class="display-2 fw-bold mb-4">
+
+    AI-Powered
+
+    <span class="text-primary">
+        Recommendation
+    </span>
+
+    <br>
+
+    System
+
+</h1>
+
+            <p class="lead text-secondary">
+
+    Discover personalized courses, AI projects,
+    career paths and learning roadmaps using
+    intelligent recommendation algorithms.
+
+</p>
+
+<p class="mt-4">
+
+    Improve your skills, identify knowledge gaps,
+    and receive AI-powered suggestions designed
+    specifically for your learning journey.
+
+</p>
+
+            <div class="mt-4">
+
+                <a href="/register"
+   class="btn btn-primary btn-lg px-4 py-3 me-3">
+
+    🚀 Get Started
+
+</a>
+
+<a href="#features"
+   class="btn btn-outline-dark btn-lg px-4 py-3">
+
+    📚 Explore Features
+
+</a>
+
+            </div>
+
+        </div>
+
+        <!-- Right Section -->
+
+<div class="col-lg-7 text-center">
+
+    <img
+    src="{{ url_for('static', filename='images/hero.png') }}"
+    class="img-fluid hero-image"
+    style="max-width:650px;"
+    alt="AI Recommendation">
+
+</div>
+
+    </div>
+
+</div>
+<!-- Statistics Section -->
+
+<section class="py-5 bg-light mt-5">
+
+    <div class="container">
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+                <h2 id="coursesCounter" class="text-primary fw-bold">0</h2>
+                <p>Courses</p>
+            </div>
+
+            <div class="col-md-3">
+                <h2 id="projectsCounter" class="text-success fw-bold">0</h2>
+                <p>Projects</p>
+            </div>
+
+            <div class="col-md-3">
+                <h2 id="accuracyCounter" class="text-danger fw-bold">0</h2>
+                <p>Accuracy</p>
+            </div>
+
+            <div class="col-md-3">
+                <h2 id="careerCounter" class="text-warning fw-bold">0</h2>
+                <p>Career Paths</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- Platform Features -->
+
+<section id="features" class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold display-5">Platform Features</h2>
+        <p class="text-muted">
+            Powerful AI features designed to personalize every student's learning journey.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100 reveal">
+                <div class="card-body text-center p-4">
+                    <div style="font-size:60px;">📚</div>
+                    <h4 class="mt-3">Course Recommendation</h4>
+                    <p class="text-muted">
+                        Suggests the most suitable courses based on interests, previous learning, and skills.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100 reveal">
+                <div class="card-body text-center p-4">
+                    <div style="font-size:60px;">💻</div>
+                    <h4 class="mt-3">Project Recommendation</h4>
+                    <p class="text-muted">
+                        Recommends AI, ML, Data Science, and Web Development projects according to your skill level.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100 reveal">
+                <div class="card-body text-center p-4">
+                    <div style="font-size:60px;">🎯</div>
+                    <h4 class="mt-3">Career Guidance</h4>
+                    <p class="text-muted">
+                        Helps students discover suitable career paths with AI-powered recommendations.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<section id="how-it-works" class="py-5 bg-light">
+
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-5">
+            How It Works
+        </h2>
+
+        <div class="row text-center">
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-lg p-4 h-100 reveal">
+                    <h1>1️⃣</h1>
+                    <h4>Create Account</h4>
+                    <p>
+                        Register and build your learning profile.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-lg p-4 h-100 reveal">
+                    <h1>2️⃣</h1>
+                    <h4>AI Analysis</h4>
+                    <p>
+                        Our AI understands your interests and skill level.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-lg p-4 h-100 reveal">
+                    <h1>3️⃣</h1>
+                    <h4>Get Recommendations</h4>
+                    <p>
+                        Receive personalized courses, projects and career guidance.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

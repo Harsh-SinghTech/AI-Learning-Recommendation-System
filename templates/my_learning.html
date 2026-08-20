@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+
+    <div class="text-center mb-5">
+
+        <div style="font-size:65px;">
+            ⭐
+        </div>
+
+        <h1 class="fw-bold">
+            My Learning
+        </h1>
+
+        <p class="text-muted fs-5">
+            Track your saved courses and projects
+        </p>
+
+    </div>
+
+
+    {% if saved %}
+
+
+        <!-- PROGRESS SUMMARY -->
+
+        {% set total = saved|length %}
+
+        {% set completed = saved
+            |selectattr("status", "equalto", "Completed")
+            |list
+            |length
+        %}
+
+        {% set progress = ((completed / total) * 100)|round|int %}
+
+
+        <div class="card border-0 shadow-lg rounded-4 mb-5">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between">
+
+                    <h4 class="fw-bold">
+                        📊 Overall Learning Progress
+                    </h4>
+
+                    <h4 class="fw-bold text-primary">
+                        {{ progress }}%
+                    </h4>
+
+                </div>
+
+
+                <div class="progress"
+                     style="height: 15px;">
+
+                    <div
+    id="learningProgressBar"
+    class="progress-bar bg-success"
+    role="progressbar"
+    data-progress="{{ progress }}">
+
+</div>
+
+                </div>
+
+
+                <p class="text-muted mt-2 mb-0">
+
+                    {{ completed }} of {{ total }}
+                    recommendations completed.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SAVED ITEMS -->
+
+        <div class="row g-4">
+
+            {% for item in saved %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card border-0 shadow-lg rounded-4 h-100">
+
+                        <div class="card-body p-4">
+
+
+                            <!-- ICON -->
+
+                            {% if item["recommendation_type"] == "course" %}
+
+                                <div style="font-size:45px;">
+                                    📚
+                                </div>
+
+                                <span class="badge bg-primary mb-3">
+                                    Course
+                                </span>
+
+                            {% else %}
+
+                                <div style="font-size:45px;">
+                                    🚀
+                                </div>
+
+                                <span class="badge bg-success mb-3">
+                                    Project
+                                </span>
+
+                            {% endif %}
+
+
+
+                            <!-- NAME -->
+
+                            <h4 class="fw-bold">
+
+                                {{ item["recommendation_name"] }}
+
+                            </h4>
+
+
+
+                            <!-- STATUS -->
+
+                            <div class="mb-3">
+
+                                {% if item["status"] == "Completed" %}
+
+                                    <span class="badge bg-success">
+                                        🟢 Completed
+                                    </span>
+
+                                {% elif item["status"] == "In Progress" %}
+
+                                    <span class="badge bg-primary">
+                                        🔵 In Progress
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        🟡 Not Started
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+
+                            <!-- PROGRESS -->
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('update_progress') }}"
+                                class="mb-3">
+
+                                <input
+                                    type="hidden"
+                                    name="recommendation_id"
+                                    value="{{ item['id'] }}">
+
+
+                                <label class="form-label fw-bold">
+
+                                    Update Progress
+
+                                </label>
+
+
+                                <select
+                                    name="status"
+                                    class="form-select mb-2">
+
+                                    <option
+                                        value="Not Started"
+                                        {% if item["status"] == "Not Started" %}
+                                            selected
+                                        {% endif %}>
+
+                                        🟡 Not Started
+
+                                    </option>
+
+
+                                    <option
+                                        value="In Progress"
+                                        {% if item["status"] == "In Progress" %}
+                                            selected
+                                        {% endif %}>
+
+                                        🔵 In Progress
+
+                                    </option>
+
+
+                                    <option
+                                        value="Completed"
+                                        {% if item["status"] == "Completed" %}
+                                            selected
+                                        {% endif %}>
+
+                                        🟢 Completed
+
+                                    </option>
+
+                                </select>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-primary w-100">
+
+                                    Update Progress
+
+                                </button>
+
+                            </form>
+
+
+
+                            <!-- VIEW -->
+
+                            <a
+                                href="{{ url_for(
+                                    'recommendation',
+                                    recommendation_type=item['recommendation_type'],
+                                    name=item['recommendation_name']
+                                ) }}"
+                                class="btn btn-primary w-100">
+
+                                View Recommendation →
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- EMPTY STATE -->
+
+        <div class="text-center py-5">
+
+            <div style="font-size:70px;">
+                📚
+            </div>
+
+            <h3 class="fw-bold mt-3">
+                Nothing Saved Yet
+            </h3>
+
+            <p class="text-muted">
+
+                Explore your recommendations and save
+                courses or projects you want to learn.
+
+            </p>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-primary btn-lg">
+
+                Explore Recommendations →
+
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const progressBar =
+        document.getElementById("learningProgressBar");
+
+    if (progressBar) {
+
+        const progress =
+            progressBar.getAttribute("data-progress");
+
+        progressBar.style.width = progress + "%";
+
+        progressBar.setAttribute(
+            "aria-valuenow",
+            progress
+        );
+
+    }
+
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- ================= WELCOME ================= -->
+
+<div class="p-5 mb-5 text-white rounded-4 shadow-lg"
+     style="background: linear-gradient(135deg, #6a5cff, #2b8cff);">
+
+    <h1 class="fw-bold">
+        👋 Welcome, {{ user_name }}!
+    </h1>
+
+    <p class="lead">
+        Your personalized AI learning journey starts here.
+    </p>
+
+    <div class="mt-4">
+
+        <span class="badge bg-light text-dark fs-6 me-2 p-2">
+            🎯 Interest: {{ interest }}
+        </span>
+
+        <span class="badge bg-light text-dark fs-6 p-2">
+            📊 Skill Level: {{ skill_level }}
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- ================= HEADING ================= -->
+
+<div class="text-center mb-5">
+
+    <h2 class="fw-bold">
+        🤖 Your Personalized Recommendations
+    </h2>
+
+    <p class="text-muted">
+        Recommendations generated according to your interests and skill level.
+    </p>
+
+</div>
+
+
+<!-- ================= RECOMMENDATIONS ================= -->
+
+<div class="row g-4">
+
+
+    <!-- ================= COURSES ================= -->
+
+    <div class="col-lg-4">
+
+        <div class="card border-0 shadow-lg rounded-4 h-100">
+
+            <div class="card-body p-4">
+
+                <div class="fs-1 mb-3">
+                    📚
+                </div>
+
+                <h3 class="fw-bold mb-3">
+                    Recommended Courses
+                </h3>
+
+                <p class="text-muted">
+                    Courses selected according to your learning profile.
+                </p>
+
+                <hr>
+
+
+                {% for course in recommendations["course_scores"] %}
+
+                <a href="{{ url_for(
+                    'recommendation',
+                    recommendation_type='course',
+                    name=course['name']
+                ) }}"
+                   class="text-decoration-none text-dark">
+
+                    <div class="p-3 mb-3 rounded-3 bg-light"
+                         style="cursor: pointer; transition: 0.2s;"
+                         onmouseover="this.style.transform='translateY(-2px)'"
+                         onmouseout="this.style.transform='translateY(0)'">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <strong>
+                                📖 {{ course["name"] }}
+                            </strong>
+
+                            <span class="badge bg-primary">
+                                {{ course["score"] }}% Match
+                            </span>
+
+                        </div>
+
+
+                        <div class="mt-2">
+
+                            <small class="text-success">
+                                ✓ Interest matched
+                            </small>
+
+                            <br>
+
+                            <small class="text-success">
+                                ✓ Skill level considered
+                            </small>
+
+                            <br>
+
+                            <small class="text-muted">
+                                📊 Relevance-based recommendation
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PROJECTS ================= -->
+
+    <div class="col-lg-4">
+
+        <div class="card border-0 shadow-lg rounded-4 h-100">
+
+            <div class="card-body p-4">
+
+                <div class="fs-1 mb-3">
+                    💡
+                </div>
+
+                <h3 class="fw-bold mb-3">
+                    AI Projects
+                </h3>
+
+                <p class="text-muted">
+                    Projects recommended for your current skill level.
+                </p>
+
+                <hr>
+
+
+                {% for project in recommendations["project_scores"] %}
+
+                <a href="{{ url_for(
+                    'recommendation',
+                    recommendation_type='project',
+                    name=project['name']
+                ) }}"
+                   class="text-decoration-none text-dark">
+
+                    <div class="p-3 mb-3 rounded-3 bg-light"
+                         style="cursor: pointer; transition: 0.2s;"
+                         onmouseover="this.style.transform='translateY(-2px)'"
+                         onmouseout="this.style.transform='translateY(0)'">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <strong>
+                                🚀 {{ project["name"] }}
+                            </strong>
+
+                            <span class="badge bg-success">
+                                {{ project["score"] }}% Match
+                            </span>
+
+                        </div>
+
+
+                        <div class="mt-2">
+
+                            <small class="text-success">
+                                ✓ Interest matched
+                            </small>
+
+                            <br>
+
+                            <small class="text-success">
+                                ✓ Skill level considered
+                            </small>
+
+                            <br>
+
+                            <small class="text-muted">
+                                📊 Relevance-based recommendation
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CAREER ================= -->
+
+    <div class="col-lg-4">
+
+        <div class="card border-0 shadow-lg rounded-4 h-100">
+
+            <div class="card-body p-4">
+
+                <div class="fs-1 mb-3">
+                    🎯
+                </div>
+
+                <h3 class="fw-bold mb-3">
+                    Career Path
+                </h3>
+
+                <p class="text-muted">
+                    A career direction based on your interests and skills.
+                </p>
+
+                <hr>
+
+
+                <div class="p-4 rounded-3 text-center"
+                     style="background: linear-gradient(135deg, #fff3cd, #ffe69c);">
+
+                    <div class="fs-1 mb-2">
+                        🚀
+                    </div>
+
+                    <h4 class="fw-bold">
+                        {{ recommendations["career"] }}
+                    </h4>
+
+                    <p class="mb-0 text-muted">
+                        Recommended career direction
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= WHY RECOMMENDATIONS ================= -->
+
+<div class="card border-0 shadow-lg rounded-4 mt-5">
+
+    <div class="card-body p-5 text-center">
+
+        <div class="fs-1 mb-3">
+            🧠
+        </div>
+
+        <h3 class="fw-bold">
+            Why These Recommendations?
+        </h3>
+
+        <p class="text-muted">
+            Our recommendation engine analyzes your
+            <strong>interest</strong>,
+            <strong>skill level</strong>, and
+            <strong>content relevance</strong>
+            to generate personalized recommendations.
+        </p>
+
+
+        <div class="row mt-4">
+
+
+            <!-- Interest -->
+
+            <div class="col-md-4">
+
+                <div class="p-3">
+
+                    <div class="fs-2">
+                        🎯
+                    </div>
+
+                    <strong>
+                        Interest Matching
+                    </strong>
+
+                    <p class="small text-muted mt-2">
+                        Your selected interest is matched with
+                        relevant learning resources.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Skill -->
+
+            <div class="col-md-4">
+
+                <div class="p-3">
+
+                    <div class="fs-2">
+                        📊
+                    </div>
+
+                    <strong>
+                        Skill Analysis
+                    </strong>
+
+                    <p class="small text-muted mt-2">
+                        Your skill level is considered when
+                        selecting suitable resources.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Score -->
+
+            <div class="col-md-4">
+
+                <div class="p-3">
+
+                    <div class="fs-2">
+                        🤖
+                    </div>
+
+                    <strong>
+                        Match Score
+                    </strong>
+
+                    <p class="small text-muted mt-2">
+                        A score is calculated using relevance
+                        and skill-level matching.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
