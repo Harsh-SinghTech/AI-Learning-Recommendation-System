@@ -1442,6 +1442,24 @@ def recommendation(recommendation_type, name):
         ""
     )
 
+    # --------------------------------
+    # SAVE RECOMMENDATION HISTORY
+    # --------------------------------
+    conn = get_db_connection()
+
+    conn.execute("""
+        INSERT INTO recommendation_history
+        (user_id, recommendation_type, recommendation_name)
+        VALUES (?, ?, ?)
+    """, (
+        session["user_id"],
+        recommendation_type,
+        name
+    ))
+
+    conn.commit()
+    conn.close()
+
 
     # --------------------------------
     # Render recommendation page
