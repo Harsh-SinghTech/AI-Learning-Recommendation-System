@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
+import database.init_db
 import csv
 import os
 from urllib.parse import quote_plus
