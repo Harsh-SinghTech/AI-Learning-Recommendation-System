@@ -12,6 +12,22 @@ from sklearn.metrics.pairwise import cosine_similarity
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+
+@app.route("/robots.txt")
+def robots_txt():
+    return app.send_static_file("robots.txt")
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    sitemap = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://ai-learning-recommendation-system-9qq5.onrender.com/</loc>
+    </url>
+</urlset>
+"""
+    return sitemap, 200, {"Content-Type": "application/xml"}
+
 def load_recommendations():
     recommendations = []
 
