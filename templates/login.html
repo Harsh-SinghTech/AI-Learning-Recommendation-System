@@ -2,92 +2,227 @@
 
 {% block content %}
 
-<div class="container py-5">
+<style>
 
-    <div class="row justify-content-center">
+    .auth-page {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        padding: 70px 0;
+        background:
+            radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12), transparent 35%),
+            radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.10), transparent 35%);
+    }
 
-        <div class="col-lg-5 col-md-7">
+    .auth-card {
+        max-width: 460px;
+        margin: auto;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid #e5e7eb;
+        border-radius: 28px;
+        padding: 42px;
+        box-shadow: 0 25px 70px rgba(15, 23, 42, 0.10);
+    }
 
-            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+    .auth-logo {
+        width: 68px;
+        height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 22px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #4f46e5, #9333ea);
+        color: white;
+        font-size: 30px;
+        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.25);
+    }
 
-                <div class="card-body p-5">
+    .auth-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #111827;
+        letter-spacing: -0.8px;
+    }
 
-                    <div class="text-center mb-4">
+    .auth-subtitle {
+        color: #64748b;
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
 
-                        <div style="font-size:60px;">
-                            🤖
-                        </div>
+    .auth-label {
+        color: #1e293b;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
 
-                        <h2 class="fw-bold">
-                            Welcome Back
-                        </h2>
+    .auth-input {
+        height: 52px;
+        border: 1px solid #dbe1ea;
+        border-radius: 13px;
+        padding: 0 16px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
 
-                        <p class="text-muted">
-                            Login to continue your personalized learning journey.
-                        </p>
+    .auth-input:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+    }
 
-                    </div>
+    .auth-login-btn {
+        height: 54px;
+        border: none;
+        border-radius: 13px;
+        background: linear-gradient(135deg, #4f46e5, #9333ea);
+        color: white;
+        font-weight: 800;
+        font-size: 1rem;
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.22);
+        transition: all 0.25s ease;
+    }
 
-                    <form method="POST">
+    .auth-login-btn:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(79, 70, 229, 0.32);
+    }
 
-                        <div class="mb-3">
+    .auth-register {
+        color: #64748b;
+        font-size: 0.95rem;
+    }
 
-                            <label class="form-label fw-semibold">
-                                Email
-                            </label>
+    .auth-register a {
+        color: #6366f1;
+        font-weight: 700;
+        text-decoration: none;
+    }
 
-                            <input
-                                type="email"
-                                class="form-control"
-                                name="email"
-                                placeholder="Enter your email"
-                                required>
+    .auth-register a:hover {
+        color: #7c3aed;
+    }
 
-                        </div>
+    .auth-divider {
+        height: 1px;
+        background: #e5e7eb;
+        margin: 28px 0 22px;
+    }
 
-                        <div class="mb-4">
+    @media (max-width: 576px) {
 
-                            <label class="form-label fw-semibold">
-                                Password
-                            </label>
+        .auth-page {
+            padding: 40px 15px;
+        }
 
-                            <input
-                                type="password"
-                                class="form-control"
-                                name="password"
-                                placeholder="Enter your password"
-                                required>
+        .auth-card {
+            padding: 30px 22px;
+            border-radius: 22px;
+        }
 
-                        </div>
+        .auth-title {
+            font-size: 1.7rem;
+        }
+    }
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100 py-3 fw-bold">
+</style>
 
-                            🚀 Login
 
-                        </button>
+<section class="auth-page">
 
-                    </form>
+    <div class="container">
 
-                    <p class="text-center mt-4 mb-0">
+        <div class="auth-card">
 
-                        Don't have an account?
+            <!-- LOGO -->
 
-                        <a href="/register" class="fw-semibold">
-                            Create Account
-                        </a>
+            <div class="text-center">
 
-                    </p>
+                <div class="auth-logo">
+                    ✦
+                </div>
+
+                <h1 class="auth-title mb-2">
+                    Welcome Back
+                </h1>
+
+                <p class="auth-subtitle mb-4">
+                    Sign in to continue your personalized
+                    learning journey with LearnAI.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+
+            <form method="POST">
+
+                <div class="mb-4">
+
+                    <label class="form-label auth-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        class="form-control auth-input"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required>
 
                 </div>
 
-            </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label auth-label">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        class="form-control auth-input"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn auth-login-btn w-100">
+
+                    Login to LearnAI →
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-divider"></div>
+
+
+            <!-- REGISTER -->
+
+            <p class="text-center auth-register mb-0">
+
+                Don't have an account?
+
+                <a href="{{ url_for('register') }}">
+                    Create Account
+                </a>
+
+            </p>
 
         </div>
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}

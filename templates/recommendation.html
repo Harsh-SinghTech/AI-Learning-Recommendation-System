@@ -2,458 +2,877 @@
 
 {% block content %}
 
-<div class="mb-4">
-    <a href="{{ url_for('dashboard') }}"
-       class="btn btn-outline-primary">
-        ← Back to Dashboard
-    </a>
-</div>
+<style>
 
-<div class="card border-0 shadow-lg rounded-4">
+    /* ================= RECOMMENDATION PAGE ================= */
 
-    <div class="card-body p-5">
+    .recommendation-page {
+        padding: 45px 0 80px;
+    }
 
-        <!-- ICON -->
+    /* ================= BACK ================= */
 
-        <div class="text-center mb-4">
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #5b4df5;
+        font-weight: 700;
+        margin-bottom: 25px;
+        transition: .2s;
+    }
 
-            {% if recommendation_type == "course" %}
+    .back-link:hover {
+        transform: translateX(-4px);
+        color: #4939dc;
+    }
 
-                <div style="font-size:70px;">
-                    📚
+
+    /* ================= HERO ================= */
+
+    .recommendation-hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 30px;
+        padding: 45px;
+        color: white;
+        background: linear-gradient(
+            135deg,
+            #5146e5,
+            #8434e9,
+            #4c8df5
+        );
+        box-shadow: 0 20px 55px rgba(81, 70, 229, .22);
+        margin-bottom: 30px;
+    }
+
+    .recommendation-hero::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.10);
+        right: -70px;
+        top: -90px;
+    }
+
+    .recommendation-hero::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.08);
+        left: -60px;
+        bottom: -80px;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .type-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 16px;
+        border-radius: 30px;
+        background: rgba(255,255,255,.18);
+        border: 1px solid rgba(255,255,255,.25);
+        font-size: 14px;
+        font-weight: 800;
+        margin-bottom: 22px;
+    }
+
+    .recommendation-icon {
+        width: 76px;
+        height: 76px;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        background: rgba(255,255,255,.16);
+        border: 1px solid rgba(255,255,255,.2);
+        margin-bottom: 20px;
+    }
+
+    .recommendation-title {
+        font-size: 44px;
+        line-height: 1.15;
+        font-weight: 850;
+        margin-bottom: 16px;
+    }
+
+    .recommendation-description {
+        max-width: 800px;
+        font-size: 17px;
+        line-height: 1.7;
+        opacity: .92;
+        margin-bottom: 25px;
+    }
+
+    .hero-score {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 16px;
+        background: white;
+        color: #5146e5;
+        font-size: 18px;
+        font-weight: 800;
+        box-shadow: 0 10px 25px rgba(0,0,0,.10);
+    }
+
+
+    /* ================= INFO CARDS ================= */
+
+    .info-card {
+        height: 100%;
+        padding: 25px;
+        border-radius: 22px;
+        background: white;
+        border: 1px solid #edf0f7;
+        box-shadow: 0 12px 35px rgba(28,39,70,.07);
+    }
+
+    .info-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .info-label {
+        font-size: 13px;
+        color: #74809a;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .info-value {
+        font-size: 19px;
+        font-weight: 800;
+        color: #111a30;
+    }
+
+
+    /* ================= SECTION ================= */
+
+    .section-card {
+        background: white;
+        border: 1px solid #edf0f7;
+        border-radius: 26px;
+        padding: 32px;
+        box-shadow: 0 12px 35px rgba(28,39,70,.06);
+        margin-top: 30px;
+    }
+
+    .section-title {
+        font-size: 25px;
+        font-weight: 800;
+        color: #111a30;
+        margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+        color: #718096;
+        margin-bottom: 25px;
+    }
+
+
+    /* ================= AI ANALYSIS ================= */
+
+    .ai-analysis {
+        background: linear-gradient(135deg,#f0edff,#eef8ff);
+        border: 1px solid #e3e5ff;
+        border-radius: 24px;
+        padding: 30px;
+        margin-top: 30px;
+    }
+
+    .ai-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #111a30;
+        margin-bottom: 22px;
+    }
+
+    .analysis-card {
+        height: 100%;
+        background: white;
+        border-radius: 18px;
+        padding: 22px;
+        border: 1px solid #edf0f7;
+    }
+
+    .analysis-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .analysis-card strong {
+        color: #111a30;
+    }
+
+    .analysis-text {
+        color: #718096;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .similarity-score {
+        font-size: 24px;
+        font-weight: 850;
+        color: #5b4df5;
+    }
+
+
+    /* ================= SKILLS ================= */
+
+    .skill-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 16px;
+        margin: 0 8px 10px 0;
+        border-radius: 30px;
+        background: #f2f0ff;
+        color: #5146e5;
+        border: 1px solid #e1ddff;
+        font-weight: 700;
+    }
+
+
+    /* ================= RESOURCES ================= */
+
+    .resource-card {
+        height: 100%;
+        padding: 25px;
+        border-radius: 22px;
+        border: 1px solid #edf0f7;
+        background: #fafbff;
+        transition: .25s ease;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-5px);
+        background: white;
+        box-shadow: 0 15px 35px rgba(28,39,70,.10);
+    }
+
+    .resource-icon {
+        font-size: 34px;
+        margin-bottom: 13px;
+    }
+
+    .resource-title {
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .resource-description {
+        color: #718096;
+        font-size: 14px;
+        line-height: 1.6;
+        min-height: 68px;
+    }
+
+    .resource-button {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 17px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+    .youtube-card {
+        border-top: 4px solid #ef4444;
+    }
+
+    .youtube-button {
+        background: #fff0f0;
+        color: #dc2626;
+    }
+
+    .github-card {
+        border-top: 4px solid #222;
+    }
+
+    .github-button {
+        background: #f0f0f0;
+        color: #111;
+    }
+
+    .free-card {
+        border-top: 4px solid #16a34a;
+    }
+
+    .free-button {
+        background: #eafaf0;
+        color: #15803d;
+    }
+
+    .premium-card {
+        border-top: 4px solid #5b4df5;
+    }
+
+    .premium-button {
+        background: #efedff;
+        color: #5146e5;
+    }
+
+
+    /* ================= SAVE ================= */
+
+    .save-section {
+        text-align: center;
+        margin-top: 35px;
+    }
+
+    .save-button {
+        border: none;
+        padding: 15px 32px;
+        border-radius: 15px;
+        background: linear-gradient(135deg,#ffbd32,#ff8f00);
+        color: white;
+        font-size: 17px;
+        font-weight: 800;
+        box-shadow: 0 12px 25px rgba(255,143,0,.22);
+        transition: .25s;
+    }
+
+    .save-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 30px rgba(255,143,0,.30);
+    }
+
+
+    /* ================= WHY ================= */
+
+    .why-card {
+        margin-top: 30px;
+        padding: 30px;
+        border-radius: 24px;
+        background: linear-gradient(135deg,#f0edff,#eef8ff);
+        border: 1px solid #e3e5ff;
+    }
+
+    .why-card h3 {
+        font-weight: 800;
+        color: #111a30;
+    }
+
+    .why-card p {
+        color: #718096;
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+        .recommendation-page {
+            padding-top: 30px;
+        }
+
+        .recommendation-hero {
+            padding: 30px 22px;
+        }
+
+        .recommendation-title {
+            font-size: 32px;
+        }
+
+        .section-card {
+            padding: 22px;
+        }
+
+        .ai-analysis {
+            padding: 22px;
+        }
+
+    }
+
+</style>
+
+
+<div class="recommendation-page">
+
+    <div class="container">
+
+
+        <!-- ================= BACK ================= -->
+
+        <a href="{{ url_for('dashboard') }}"
+           class="back-link">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <!-- ================= HERO ================= -->
+
+        <div class="recommendation-hero">
+
+            <div class="hero-content">
+
+
+                {% if recommendation_type == "course" %}
+
+                    <div class="type-badge">
+                        📚 Recommended Course
+                    </div>
+
+                    <div class="recommendation-icon">
+                        📚
+                    </div>
+
+                {% else %}
+
+                    <div class="type-badge">
+                        🚀 Recommended Project
+                    </div>
+
+                    <div class="recommendation-icon">
+                        🚀
+                    </div>
+
+                {% endif %}
+
+
+                <h1 class="recommendation-title">
+                    {{ name }}
+                </h1>
+
+
+                <p class="recommendation-description">
+                    {{ description }}
+                </p>
+
+
+                <div class="hero-score">
+                    ⭐ {{ score }}% Match
                 </div>
 
-            {% else %}
-
-                <div style="font-size:70px;">
-                    🚀
-                </div>
-
-            {% endif %}
+            </div>
 
         </div>
 
 
-        <!-- TITLE -->
+        <!-- ================= USER PROFILE ================= -->
 
-        <h1 class="text-center fw-bold mb-3">
-            {{ name }}
-        </h1>
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        🎯
+                    </div>
+
+                    <div class="info-label">
+                        YOUR INTEREST
+                    </div>
+
+                    <div class="info-value">
+                        {{ interest }}
+                    </div>
+
+                </div>
+
+            </div>
 
 
-        <!-- TYPE -->
+            <div class="col-md-4">
 
-        <div class="text-center mb-4">
+                <div class="info-card">
 
-            {% if recommendation_type == "course" %}
+                    <div class="info-icon">
+                        📊
+                    </div>
 
-                <span class="badge bg-primary fs-6 p-2">
-                    📚 Recommended Course
-                </span>
+                    <div class="info-label">
+                        SKILL LEVEL
+                    </div>
 
-            {% else %}
+                    <div class="info-value">
+                        {{ skill_level }}
+                    </div>
 
-                <span class="badge bg-success fs-6 p-2">
-                    🚀 Recommended Project
-                </span>
+                </div>
 
-            {% endif %}
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        ⭐
+                    </div>
+
+                    <div class="info-label">
+                        RECOMMENDATION SCORE
+                    </div>
+
+                    <div class="info-value">
+                        {{ score }}% Match
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-        <!-- DESCRIPTION -->
+        <!-- ================= AI ANALYSIS ================= -->
 
-        <div class="mb-4">
+        <div class="ai-analysis">
 
-            <h3 class="fw-bold">
-                About This Recommendation
-            </h3>
+            <div class="ai-title">
+                🤖 AI Match Analysis
+            </div>
 
-            <p class="text-muted fs-5">
-                {{ description }}
+            <div class="row g-3">
+
+
+                <div class="col-md-4">
+
+                    <div class="analysis-card">
+
+                        <div class="analysis-icon">
+                            🎯
+                        </div>
+
+                        <strong>
+                            Interest Match
+                        </strong>
+
+                        <p class="analysis-text">
+                            Your selected interest:
+                            <strong>{{ interest }}</strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="analysis-card">
+
+                        <div class="analysis-icon">
+                            📊
+                        </div>
+
+                        <strong>
+                            Skill Match
+                        </strong>
+
+                        <p class="analysis-text">
+                            Your current level:
+                            <strong>{{ skill_level }}</strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="analysis-card">
+
+                        <div class="analysis-icon">
+                            🧠
+                        </div>
+
+                        <strong>
+                            ML Similarity
+                        </strong>
+
+                        <p class="analysis-text">
+
+                            <span class="similarity-score">
+                                {{ "%.1f"|format(ml_similarity) }}%
+                            </span>
+
+                            <br>
+
+                            Calculated using
+                            <strong>TF-IDF + Cosine Similarity</strong>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <p class="analysis-text mt-4 mb-0">
+
+                🤖 This recommendation combines your
+                interest, skill level, content relevance,
+                previous activity and machine-learning
+                similarity analysis.
+
             </p>
 
         </div>
 
 
-        <!-- INFORMATION -->
+        <!-- ================= SKILLS ================= -->
 
-        <div class="row g-4 mb-4">
+        <div class="section-card">
 
-            <div class="col-md-4">
+            <h2 class="section-title">
+                🧠 Skills You Will Develop
+            </h2>
 
-                <div class="p-4 bg-light rounded-4 h-100">
-
-                    <h5 class="fw-bold">
-                        🎯 Your Interest
-                    </h5>
-
-                    <p class="mb-0 text-muted">
-                        {{ interest }}
-                    </p>
-
-                </div>
-
-            </div>
+            <p class="section-subtitle">
+                Key skills and concepts you can build through this recommendation.
+            </p>
 
 
-            <div class="col-md-4">
+            <div>
 
-                <div class="p-4 bg-light rounded-4 h-100">
+                {% for skill in skills %}
 
-                    <h5 class="fw-bold">
-                        📊 Skill Level
-                    </h5>
-
-                    <p class="mb-0 text-muted">
-                        {{ skill_level }}
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="col-md-4">
-
-                <div class="p-4 bg-light rounded-4 h-100">
-
-                    <h5 class="fw-bold">
-                        ⭐ Match Score
-                    </h5>
-
-                    <span class="badge bg-primary fs-6">
-                        {{ score }}% Match
+                    <span class="skill-pill">
+                        ✓ {{ skill }}
                     </span>
 
-                </div>
-
-            </div>
-
-        </div>
-        <h5 class="fw-bold">
-    ⭐ Match Score
-</h5>
-
-<span class="badge bg-primary fs-6">
-    {{ score }}% Match
-</span>
-
-</div>
-
-</div>
-
-
-<!-- PASTE AI MATCH ANALYSIS HERE -->
-
-
-<div class="mt-4 p-4 rounded-4"
-     style="background: linear-gradient(135deg,#eef2ff,#e0f2fe);">
-
-    <h4 class="fw-bold mb-3">
-        🤖 AI Match Analysis
-    </h4>
-
-    <div class="row g-3">
-
-        <div class="col-md-4">
-
-            <div class="bg-white rounded-3 p-3 h-100">
-
-                <div class="fs-4">
-                    🎯
-                </div>
-
-                <strong>
-                    Interest Match
-                </strong>
-
-                <p class="small text-muted mb-0 mt-1">
-                    Your selected interest:
-                    <strong>{{ interest }}</strong>
-                </p>
+                {% endfor %}
 
             </div>
 
         </div>
 
 
-        <div class="col-md-4">
+        <!-- ================= RESOURCES ================= -->
 
-            <div class="bg-white rounded-3 p-3 h-100">
+        <div class="section-card">
 
-                <div class="fs-4">
-                    📊
+            <h2 class="section-title">
+                🔗 Learning & Project Resources
+            </h2>
+
+            <p class="section-subtitle">
+                Explore tutorials, courses and practical resources related to this recommendation.
+            </p>
+
+
+            <div class="row g-4">
+
+
+                <!-- YOUTUBE -->
+
+                {% if youtube_url %}
+
+                <div class="col-md-6">
+
+                    <div class="resource-card youtube-card">
+
+                        <div class="resource-icon">
+                            ▶️
+                        </div>
+
+                        <div class="resource-title text-danger">
+                            YouTube Tutorial
+                        </div>
+
+                        <div class="resource-description">
+                            Video tutorials, explanations and practical
+                            learning related to this recommendation.
+                        </div>
+
+                        <a href="{{ youtube_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="resource-button youtube-button">
+
+                            Watch Tutorial →
+
+                        </a>
+
+                    </div>
+
                 </div>
 
-                <strong>
-                    Skill Match
-                </strong>
+                {% endif %}
 
-                <p class="small text-muted mb-0 mt-1">
-                    Your level:
-                    <strong>{{ skill_level }}</strong>
-                </p>
+
+                <!-- GITHUB -->
+
+                {% if github_url %}
+
+                <div class="col-md-6">
+
+                    <div class="resource-card github-card">
+
+                        <div class="resource-icon">
+                            💻
+                        </div>
+
+                        <div class="resource-title">
+                            GitHub Repository
+                        </div>
+
+                        <div class="resource-description">
+                            Explore source code, implementations and
+                            practical project examples.
+                        </div>
+
+                        <a href="{{ github_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="resource-button github-button">
+
+                            Open GitHub →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- FREE COURSE -->
+
+                {% if free_course_url %}
+
+                <div class="col-md-6">
+
+                    <div class="resource-card free-card">
+
+                        <div class="resource-icon">
+                            🎓
+                        </div>
+
+                        <div class="resource-title text-success">
+                            Free Course / Guide
+                        </div>
+
+                        <div class="resource-description">
+                            Free courses, documentation and structured
+                            learning material.
+                        </div>
+
+                        <a href="{{ free_course_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="resource-button free-button">
+
+                            Open Free Resource →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- PREMIUM COURSE -->
+
+                {% if paid_course_url %}
+
+                <div class="col-md-6">
+
+                    <div class="resource-card premium-card">
+
+                        <div class="resource-icon">
+                            💎
+                        </div>
+
+                        <div class="resource-title"
+                             style="color:#5146e5;">
+
+                            Premium Course
+
+                        </div>
+
+                        <div class="resource-description">
+                            Structured paid courses for deeper
+                            learning and advanced practice.
+                        </div>
+
+                        <a href="{{ paid_course_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="resource-button premium-button">
+
+                            Explore Course →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
 
             </div>
 
         </div>
 
 
-        <div class="col-md-4">
+        <!-- ================= SAVE ================= -->
 
-            <div class="bg-white rounded-3 p-3 h-100">
+        <div class="save-section">
 
-                <div class="fs-4">
-                    🧠
-                </div>
+            <form method="POST"
+                  action="{{ url_for('save_recommendation') }}">
 
-                <strong>
-                    ML Similarity
-                </strong>
+                <input type="hidden"
+                       name="recommendation_type"
+                       value="{{ recommendation_type }}">
 
-                <p class="small text-muted mb-0 mt-1">
+                <input type="hidden"
+                       name="recommendation_name"
+                       value="{{ name }}">
 
-    <strong class="text-primary fs-5">
-        {{ "%.1f"|format(ml_similarity) }}%
-    </strong>
+                <button type="submit"
+                        class="save-button">
 
-    ML similarity
+                    ⭐ Save to My Learning
 
-    <br>
+                </button>
 
-    <span>
-        Calculated using
-        <strong>TF-IDF + Cosine Similarity</strong>.
-    </span>
-
-</p>
-
-            </div>
+            </form>
 
         </div>
 
-    </div>
 
-    <div class="mt-3">
+        <!-- ================= WHY ================= -->
 
-        <p class="mb-0 text-muted">
-            🤖 This recommendation combines your
-            interest, skill level, content relevance,
-            previous activity and machine-learning
-            similarity analysis.
-        </p>
+        <div class="why-card">
 
-    </div>
-
-</div>
-
-        <!-- SKILLS -->
-
-        <div class="mb-5">
-
-            <h3 class="fw-bold mb-3">
-                🧠 Skills You Will Develop
+            <h3>
+                🤖 Why We Recommended This
             </h3>
 
-            {% for skill in skills %}
-
-                <span class="badge bg-light text-dark border fs-6 p-2 me-2 mb-2">
-                    {{ skill }}
-                </span>
-
-            {% endfor %}
-
-        </div>
-
-
-        <!-- RESOURCES -->
-
-        <div class="mb-5">
-
-    <h3 class="fw-bold mb-4">
-        🔗 Learning & Project Resources
-    </h3>
-
-    <div class="row g-4">
-
-        <!-- YOUTUBE -->
-
-        {% if youtube_url %}
-
-        <div class="col-md-6">
-
-            <a href="{{ youtube_url }}"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="text-decoration-none">
-
-                <div class="p-4 rounded-4 border bg-light h-100">
-
-                    <h5 class="fw-bold text-danger">
-                        ▶️ YouTube Tutorial
-                    </h5>
-
-                    <p class="text-muted">
-                        Video tutorials, explanations and practical
-                        learning related to this recommendation.
-                    </p>
-
-                    <span class="btn btn-danger">
-                        Watch Tutorial →
-                    </span>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        {% endif %}
-
-
-        <!-- GITHUB -->
-
-        {% if github_url %}
-
-        <div class="col-md-6">
-
-            <a href="{{ github_url }}"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="text-decoration-none">
-
-                <div class="p-4 rounded-4 border bg-light h-100">
-
-                    <h5 class="fw-bold text-dark">
-                        💻 GitHub Repository
-                    </h5>
-
-                    <p class="text-muted">
-                        Explore source code, implementation and
-                        project examples on GitHub.
-                    </p>
-
-                    <span class="btn btn-dark">
-                        Open GitHub →
-                    </span>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        {% endif %}
-
-
-        <!-- FREE COURSE -->
-
-        {% if free_course_url %}
-
-        <div class="col-md-6">
-
-            <a href="{{ free_course_url }}"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="text-decoration-none">
-
-                <div class="p-4 rounded-4 border bg-light h-100">
-
-                    <h5 class="fw-bold text-success">
-                        🎓 Free Course / Guide
-                    </h5>
-
-                    <p class="text-muted">
-                        Free courses, documentation and structured
-                        learning material.
-                    </p>
-
-                    <span class="btn btn-success">
-                        Open Free Resource →
-                    </span>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        {% endif %}
-
-
-        <!-- PREMIUM COURSE -->
-
-        {% if paid_course_url %}
-
-        <div class="col-md-6">
-
-            <a href="{{ paid_course_url }}"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="text-decoration-none">
-
-                <div class="p-4 rounded-4 border bg-light h-100">
-
-                    <h5 class="fw-bold text-primary">
-                        💎 Premium Course
-                    </h5>
-
-                    <p class="text-muted">
-                        Structured paid courses for deeper learning.
-                    </p>
-
-                    <span class="btn btn-primary">
-                        Explore Course →
-                    </span>
-
-                </div>
-
-            </a>
-
-        </div>
-
-        {% endif %}
-
-    </div>
-
-</div>
-<!-- SAVE RECOMMENDATION -->
-
-<div class="text-center mt-5">
-
-    <form method="POST"
-          action="{{ url_for('save_recommendation') }}">
-
-        <input type="hidden"
-               name="recommendation_type"
-               value="{{ recommendation_type }}">
-
-        <input type="hidden"
-               name="recommendation_name"
-               value="{{ name }}">
-
-        <button type="submit"
-                class="btn btn-warning btn-lg px-5">
-
-            ⭐ Save to My Learning
-
-        </button>
-
-    </form>
-
-</div>
-        <!-- WHY RECOMMENDED -->
-
-        <div class="p-4 rounded-4"
-             style="background: linear-gradient(135deg,#eef2ff,#e0f2fe);">
-
-            <h4 class="fw-bold">
-                🤖 Why We Recommended This
-            </h4>
-
-            <p class="mb-0 text-muted">
+            <p class="mt-3">
 
                 This recommendation was selected according
                 to your interest, skill level and recommendation
@@ -462,6 +881,7 @@
             </p>
 
         </div>
+
 
     </div>
 

@@ -2,381 +2,603 @@
 
 {% block content %}
 
-<div class="container py-5">
+<style>
 
-    <!-- ================= HEADER ================= -->
+    /* ================= ROADMAP PAGE ================= */
 
-    <div class="text-center mb-5">
+    .roadmap-page {
+        padding: 55px 0 80px;
+    }
 
-        <div style="font-size:65px;">
-            🗺️
+    .roadmap-header {
+        text-align: center;
+        margin-bottom: 55px;
+    }
+
+    .roadmap-icon {
+        width: 82px;
+        height: 82px;
+        margin: 0 auto 22px;
+        border-radius: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        background: linear-gradient(135deg, #5b4df5, #9b35ed);
+        box-shadow: 0 15px 35px rgba(91, 77, 245, .25);
+    }
+
+    .roadmap-header h1 {
+        font-size: 46px;
+        font-weight: 800;
+        color: #10182b;
+        margin-bottom: 12px;
+    }
+
+    .roadmap-header p {
+        font-size: 18px;
+        color: #61708c;
+        margin-bottom: 22px;
+    }
+
+    .roadmap-badges {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .roadmap-badge {
+        padding: 10px 18px;
+        border-radius: 30px;
+        font-weight: 700;
+        background: #f0edff;
+        color: #5b4df5;
+    }
+
+    .roadmap-badge.skill {
+        background: #eafaf2;
+        color: #159463;
+    }
+
+
+    /* ================= STEP CARD ================= */
+
+    .roadmap-step {
+        position: relative;
+        border: 1px solid #edf0f7;
+        border-radius: 28px;
+        background: #ffffff;
+        padding: 30px;
+        margin-bottom: 28px;
+        box-shadow: 0 15px 45px rgba(28, 39, 70, .08);
+        transition: .3s ease;
+    }
+
+    .roadmap-step:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(28, 39, 70, .13);
+    }
+
+    .step-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .step-info {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .step-number {
+        width: 62px;
+        height: 62px;
+        flex-shrink: 0;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #5b4df5, #9635ed);
+        color: white;
+        font-size: 23px;
+        font-weight: 800;
+        box-shadow: 0 10px 25px rgba(91, 77, 245, .25);
+    }
+
+    .step-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #6b5cf5;
+        margin-bottom: 4px;
+    }
+
+    .step-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: #10182b;
+        margin: 0;
+    }
+
+    .step-stage-icon {
+        font-size: 42px;
+    }
+
+    .step-description {
+        color: #64748b;
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+
+    /* ================= RESOURCES ================= */
+
+    .resource-card {
+        height: 100%;
+        padding: 22px;
+        border: 1px solid #edf0f7;
+        border-radius: 20px;
+        background: #fafbff;
+        transition: .25s ease;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-3px);
+        border-color: #d9d4ff;
+        background: #ffffff;
+    }
+
+    .resource-icon {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .resource-title {
+        font-size: 18px;
+        font-weight: 800;
+        margin-bottom: 7px;
+    }
+
+    .resource-description {
+        color: #718096;
+        font-size: 14px;
+        line-height: 1.6;
+        min-height: 45px;
+    }
+
+    .resource-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 9px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .youtube-btn {
+        background: #fff0f0;
+        color: #dc2626;
+    }
+
+    .free-btn {
+        background: #eafaf2;
+        color: #159463;
+    }
+
+    .premium-btn {
+        background: #efedff;
+        color: #5b4df5;
+    }
+
+    .project-btn {
+        background: #fff7df;
+        color: #c27a00;
+    }
+
+
+    /* ================= PROGRESS ================= */
+
+    .progress-area {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid #edf0f7;
+    }
+
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 9px;
+        font-size: 14px;
+    }
+
+    .roadmap-progress {
+        height: 11px;
+        border-radius: 20px;
+        background: #ececf4;
+        overflow: hidden;
+    }
+
+    .roadmap-progress .progress-bar {
+        border-radius: 20px;
+        background: linear-gradient(90deg, #5b4df5, #9635ed);
+        transition: width .8s ease;
+    }
+
+
+    /* ================= CONNECTOR ================= */
+
+    .roadmap-connector {
+        text-align: center;
+        font-size: 32px;
+        color: #6b5cf5;
+        margin: -12px 0 18px;
+    }
+
+
+    /* ================= END CARD ================= */
+
+    .roadmap-end {
+        margin-top: 55px;
+        padding: 50px 25px;
+        text-align: center;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #5b4df5, #9635ed);
+        color: white;
+        box-shadow: 0 20px 50px rgba(91, 77, 245, .25);
+    }
+
+    .roadmap-end-icon {
+        font-size: 55px;
+        margin-bottom: 12px;
+    }
+
+    .roadmap-end h2 {
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .roadmap-end p {
+        opacity: .9;
+        font-size: 17px;
+        margin-bottom: 25px;
+    }
+
+    .dashboard-btn {
+        display: inline-block;
+        background: white;
+        color: #5b4df5;
+        padding: 12px 25px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+        .roadmap-header h1 {
+            font-size: 34px;
+        }
+
+        .roadmap-step {
+            padding: 22px;
+        }
+
+        .step-top {
+            align-items: flex-start;
+        }
+
+        .step-title {
+            font-size: 22px;
+        }
+
+        .step-stage-icon {
+            font-size: 32px;
+        }
+
+    }
+
+</style>
+
+
+<div class="roadmap-page">
+
+    <div class="container">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="roadmap-header">
+
+            <div class="roadmap-icon">
+                🗺️
+            </div>
+
+            <h1>
+                Your Learning Roadmap
+            </h1>
+
+            <p>
+                A personalized step-by-step path designed around your learning goals.
+            </p>
+
+            <div class="roadmap-badges">
+
+                <span class="roadmap-badge">
+                    🎯 {{ interest }}
+                </span>
+
+                <span class="roadmap-badge skill">
+                    📊 {{ skill_level }}
+                </span>
+
+            </div>
+
         </div>
 
-        <h1 class="fw-bold">
-            Your Personalized Learning Roadmap
-        </h1>
 
-        <p class="text-muted fs-5">
-            A step-by-step learning path created according
-            to your interest and skill level.
-        </p>
-
-        <div class="mt-3">
-
-            <span class="badge bg-primary fs-6 p-2 me-2">
-                🎯 {{ interest }}
-            </span>
-
-            <span class="badge bg-success fs-6 p-2">
-                📊 {{ skill_level }}
-            </span>
-
-        </div>
-
-    </div>
+        {% if roadmap_data %}
 
 
-    {% if roadmap_data %}
-
-
-    <!-- ================= ROADMAP ================= -->
-
-    <div class="position-relative">
+        <!-- ================= ROADMAP STEPS ================= -->
 
         {% for step in roadmap_data %}
 
-        <div class="card border-0 shadow-lg rounded-4 mb-4">
-
-            <div class="card-body p-4">
+        <div class="roadmap-step">
 
 
-                <!-- STEP HEADER -->
+            <!-- STEP HEADER -->
 
-                <div class="d-flex
-                            justify-content-between
-                            align-items-center
-                            mb-3">
+            <div class="step-top">
 
-                    <div class="d-flex
-                                align-items-center">
+                <div class="step-info">
 
-                        <div
-                            class="rounded-circle
-                                   bg-primary
-                                   text-white
-                                   d-flex
-                                   align-items-center
-                                   justify-content-center
-                                   fw-bold me-3"
-                            style="
-                                width:60px;
-                                height:60px;
-                                font-size:22px;
-                            ">
-
-                            {{ step.number }}
-
-                        </div>
-
-
-                        <div>
-
-                            {% if step.number == 1 %}
-
-                            <small class="text-success fw-bold">
-                                🟢 START HERE
-                            </small>
-
-                            {% elif step.number == roadmap_data|length %}
-
-                            <small class="text-warning fw-bold">
-                                🏆 FINAL STEP
-                            </small>
-
-                            {% else %}
-
-                            <small class="text-muted fw-bold">
-                                STEP {{ step.number }}
-                            </small>
-
-                            {% endif %}
-
-
-                            <h3 class="fw-bold mb-0">
-                                {{ step.name }}
-                            </h3>
-
-                        </div>
-
+                    <div class="step-number">
+                        {{ step.number }}
                     </div>
 
+                    <div>
 
-                    <div style="font-size:45px;">
+                        {% if step.number == 1 %}
 
-                        {% if step.number <= 3 %}
+                        <span class="step-label">
+                            🟢 START HERE
+                        </span>
 
-                            🌱
+                        {% elif step.number == roadmap_data|length %}
 
-                        {% elif step.number <= 6 %}
-
-                            📈
-
-                        {% elif step.number <= 9 %}
-
-                            🚀
+                        <span class="step-label">
+                            🏆 FINAL STEP
+                        </span>
 
                         {% else %}
 
-                            🏆
+                        <span class="step-label">
+                            STEP {{ step.number }}
+                        </span>
 
                         {% endif %}
 
+                        <h2 class="step-title">
+                            {{ step.name }}
+                        </h2>
+
                     </div>
 
                 </div>
 
 
-                <!-- DESCRIPTION -->
+                <div class="step-stage-icon">
 
-                <p class="text-muted">
-
-                    Learn this skill and complete the
-                    recommended resources before moving
-                    to the next roadmap stage.
-
-                </p>
-
-
-                <!-- ================= RESOURCES ================= -->
-
-                <div class="row g-3 mt-2">
-
-
-                    <!-- YOUTUBE -->
-
-                    {% if step.youtube_url %}
-
-                    <div class="col-md-6">
-
-                        <a
-                            href="{{ step.youtube_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-decoration-none">
-
-                            <div
-                                class="p-3
-                                       rounded-3
-                                       border
-                                       h-100">
-
-                                <h5 class="fw-bold text-danger">
-
-                                    ▶️ YouTube Tutorials
-
-                                </h5>
-
-                                <p class="small text-muted mb-2">
-
-                                    Video tutorials,
-                                    explanations and
-                                    practical learning.
-
-                                </p>
-
-                                <span class="btn btn-danger">
-
-                                    Watch Tutorials →
-
-                                </span>
-
-                            </div>
-
-                        </a>
-
-                    </div>
-
+                    {% if step.number <= 3 %}
+                        🌱
+                    {% elif step.number <= 6 %}
+                        📈
+                    {% elif step.number <= 9 %}
+                        🚀
+                    {% else %}
+                        🏆
                     {% endif %}
-
-
-                    <!-- FREE COURSE -->
-
-                    {% if step.free_course_url %}
-
-                    <div class="col-md-6">
-
-                        <a
-                            href="{{ step.free_course_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-decoration-none">
-
-                            <div
-                                class="p-3
-                                       rounded-3
-                                       border
-                                       h-100">
-
-                                <h5 class="fw-bold text-success">
-
-                                    🎓 Free Course
-
-                                </h5>
-
-                                <p class="small text-muted mb-2">
-
-                                    Free course,
-                                    documentation or
-                                    structured guide.
-
-                                </p>
-
-                                <span class="btn btn-success">
-
-                                    Start Free Course →
-
-                                </span>
-
-                            </div>
-
-                        </a>
-
-                    </div>
-
-                    {% endif %}
-
-
-                    <!-- PAID COURSE -->
-
-                    {% if step.paid_course_url %}
-
-                    <div class="col-md-6">
-
-                        <a
-                            href="{{ step.paid_course_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-decoration-none">
-
-                            <div
-                                class="p-3
-                                       rounded-3
-                                       border
-                                       h-100">
-
-                                <h5 class="fw-bold text-primary">
-
-                                    💎 Premium Course
-
-                                </h5>
-
-                                <p class="small text-muted mb-2">
-
-                                    Structured paid course
-                                    for deeper learning.
-
-                                </p>
-
-                                <span class="btn btn-primary">
-
-                                    Explore Course →
-
-                                </span>
-
-                            </div>
-
-                        </a>
-
-                    </div>
-
-                    {% endif %}
-
-
-                    <!-- PROJECT -->
-
-                    {% if step.project_url %}
-
-                    <div class="col-md-6">
-
-                        <a
-                            href="{{ step.project_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-decoration-none">
-
-                            <div
-                                class="p-3
-                                       rounded-3
-                                       border
-                                       h-100">
-
-                                <h5 class="fw-bold text-warning">
-
-                                    🚀 Project Resource
-
-                                </h5>
-
-                                <p class="small text-muted mb-2">
-
-                                    GitHub repositories,
-                                    implementations and
-                                    project examples.
-
-                                </p>
-
-                                <span class="btn btn-warning">
-
-                                    Open Project →
-
-                                </span>
-
-                            </div>
-
-                        </a>
-
-                    </div>
-
-                    {% endif %}
-
 
                 </div>
 
+            </div>
 
-                <!-- STEP COMPLETION -->
 
-                <div class="mt-4">
+            <!-- DESCRIPTION -->
 
-                    <div class="d-flex
-                                justify-content-between
-                                mb-1">
+            <p class="step-description">
+                Learn this skill and complete the recommended
+                resources before moving to the next roadmap stage.
+            </p>
 
-                        <small class="fw-bold">
-                            Roadmap Progress
-                        </small>
 
-                        <small class="text-muted">
+            <!-- ================= RESOURCES ================= -->
 
-                            {{ step.number }}
-                            /
-                            {{ roadmap_data|length }}
+            <div class="row g-3">
 
-                        </small>
 
+                {% if step.youtube_url %}
+
+                <div class="col-md-6">
+
+                    <a href="{{ step.youtube_url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-decoration-none">
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon">
+                                ▶️
+                            </div>
+
+                            <div class="resource-title text-danger">
+                                YouTube Tutorials
+                            </div>
+
+                            <div class="resource-description">
+                                Video tutorials, explanations and practical learning.
+                            </div>
+
+                            <span class="resource-btn youtube-btn">
+                                Watch Tutorials →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if step.free_course_url %}
+
+                <div class="col-md-6">
+
+                    <a href="{{ step.free_course_url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-decoration-none">
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon">
+                                🎓
+                            </div>
+
+                            <div class="resource-title text-success">
+                                Free Course
+                            </div>
+
+                            <div class="resource-description">
+                                Free course, documentation or structured guide.
+                            </div>
+
+                            <span class="resource-btn free-btn">
+                                Start Free Course →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if step.paid_course_url %}
+
+                <div class="col-md-6">
+
+                    <a href="{{ step.paid_course_url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-decoration-none">
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon">
+                                💎
+                            </div>
+
+                            <div class="resource-title">
+                                Premium Course
+                            </div>
+
+                            <div class="resource-description">
+                                Structured paid course for deeper learning.
+                            </div>
+
+                            <span class="resource-btn premium-btn">
+                                Explore Course →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if step.project_url %}
+
+                <div class="col-md-6">
+
+                    <a href="{{ step.project_url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="text-decoration-none">
+
+                        <div class="resource-card">
+
+                            <div class="resource-icon">
+                                🚀
+                            </div>
+
+                            <div class="resource-title">
+                                Project Resource
+                            </div>
+
+                            <div class="resource-description">
+                                GitHub repositories, implementations and project examples.
+                            </div>
+
+                            <span class="resource-btn project-btn">
+                                Open Project →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= PROGRESS ================= -->
+
+            <div class="progress-area">
+
+                <div class="progress-label">
+
+                    <strong>
+                        Roadmap Progress
+                    </strong>
+
+                    <span>
+                        {{ step.number }} / {{ roadmap_data|length }}
+                    </span>
+
+                </div>
+
+                <div class="roadmap-progress">
+
+                    <div
+                        class="progress-bar"
+                        role="progressbar"
+                        data-progress="{{ step.progress }}"
+                        aria-valuenow="{{ step.progress }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100">
                     </div>
 
-                    <div class="progress" style="height:10px;">
-
-    <div
-    class="progress-bar bg-success"
-    role="progressbar"
-    data-progress="{{ step.progress }}"
-    aria-valuenow="{{ step.progress }}"
-    aria-valuemin="0"
-    aria-valuemax="100">
-</div>
-
-</div>
-                    
                 </div>
 
             </div>
@@ -386,52 +608,36 @@
 
         {% if not loop.last %}
 
-        <div class="text-center
-                    text-primary
-                    mb-4"
-             style="font-size:35px;">
-
+        <div class="roadmap-connector">
             ↓
-
         </div>
 
         {% endif %}
 
+
         {% endfor %}
 
-    </div>
 
+        <!-- ================= END ================= -->
 
-    <!-- ================= END ================= -->
+        <div class="roadmap-end">
 
-    <div
-        class="card
-               border-0
-               shadow-lg
-               rounded-4
-               mt-5">
-
-        <div class="card-body p-5 text-center">
-
-            <div style="font-size:60px;">
+            <div class="roadmap-end-icon">
                 🏆
             </div>
 
-            <h2 class="fw-bold">
+            <h2>
                 Keep Going!
             </h2>
 
-            <p class="text-muted fs-5">
-
-                Follow the roadmap step-by-step,
-                build projects along the way and
-                track your progress.
-
+            <p>
+                Follow your roadmap step-by-step, build projects
+                and keep progressing toward your goals.
             </p>
 
             <a
                 href="{{ url_for('dashboard') }}"
-                class="btn btn-primary btn-lg px-5">
+                class="dashboard-btn">
 
                 ← Back to Dashboard
 
@@ -439,45 +645,48 @@
 
         </div>
 
-    </div>
+
+        {% else %}
 
 
-    {% else %}
+        <!-- ================= EMPTY STATE ================= -->
 
+        <div class="text-center py-5">
 
-    <!-- ================= NO ROADMAP ================= -->
+            <div style="font-size:70px;">
+                🗺️
+            </div>
 
-    <div class="text-center py-5">
+            <h2 class="fw-bold mt-3">
+                Roadmap Coming Soon
+            </h2>
 
-        <div style="font-size:70px;">
-            🗺️
+            <p class="text-muted">
+                A roadmap for this interest and skill level
+                has not been added yet.
+            </p>
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-primary">
+
+                ← Back to Dashboard
+
+            </a>
+
         </div>
 
-        <h2 class="fw-bold mt-3">
-            Roadmap Coming Soon
-        </h2>
-
-        <p class="text-muted">
-
-            A roadmap for this interest and
-            skill level has not been added yet.
-
-        </p>
-
-        <a
-            href="{{ url_for('dashboard') }}"
-            class="btn btn-primary">
-
-            ← Back to Dashboard
-
-        </a>
+        {% endif %}
 
     </div>
 
-    {% endif %}
-
 </div>
+
+
+<!-- ================= PROGRESS SCRIPT ================= -->
+
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const progressBars =
@@ -493,6 +702,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
 </script>
 
 {% endblock %}
