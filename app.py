@@ -19,14 +19,7 @@ def robots_txt():
 
 @app.route("/sitemap.xml")
 def sitemap_xml():
-    sitemap = """<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://ai-learning-recommendation-system-9qq5.onrender.com/</loc>
-    </url>
-</urlset>
-"""
-    return sitemap, 200, {"Content-Type": "application/xml"}
+    return app.send_static_file("sitemap.xml")
 
 def load_recommendations():
     recommendations = []
